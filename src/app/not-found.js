@@ -20,13 +20,13 @@ const NotFound = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/15 blur-[160px]" 
+                className="absolute left-1/2 top-1/2 h-112 w-112.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/15 blur-[160px]" 
             />
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.8, delay: 0.2, ease: "easeOut" }}
-                className="absolute right-1/4 top-1/4 h-[250px] w-[250px] rounded-full bg-cyan-500/10 blur-[130px]" 
+                className="absolute right-1/4 top-1/4 h-62.5 w-62.5 rounded-full bg-cyan-500/10 blur-[130px]" 
             />
 
             {/* Central Content Card */}
@@ -42,7 +42,7 @@ const NotFound = () => {
                     {/* Animated Decorative Icon */}
                     <motion.div 
                         variants={fadeInUp}
-                        className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-xl"
+                        className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/10 bg-white/4 backdrop-blur-xl shadow-xl"
                     >
                         <Compass className="h-10 w-10 text-violet-400 animate-[spin_20s_linear_infinite]" />
                     </motion.div>

@@ -33,7 +33,7 @@ const RecruiterJobsPage = async () => {
 
             <Table aria-label="Company jobs management table">
                 <Table.ResizableContainer>
-                    <Table.Content className="min-w-[800px]">
+                    <Table.Content className="min-w-200">
                         <Table.Header>
                             <Table.Column isRowHeader defaultWidth="2fr" id="jobTitle" minWidth={200}>
                                 Job Title

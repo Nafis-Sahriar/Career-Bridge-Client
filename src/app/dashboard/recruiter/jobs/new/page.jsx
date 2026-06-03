@@ -68,7 +68,7 @@ const NewJob = () => {
       <Form className="space-y-8" onSubmit={handleSubmit} >
 
         {/* Job Information */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <BriefcaseBusiness size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -141,7 +141,7 @@ const NewJob = () => {
         </div>
 
         {/* Skills & Qualifications */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <Sparkles size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -159,7 +159,7 @@ const NewJob = () => {
         </div>
 
         {/* Salary Information */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <FileText size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -189,7 +189,7 @@ const NewJob = () => {
         </div>
 
         {/* Location & Workspace Layout */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <MapPin size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -230,7 +230,7 @@ const NewJob = () => {
         </div>
 
         {/* Job Description */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <FileText size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -269,7 +269,7 @@ const NewJob = () => {
         </div>
 
         {/* Application Redirection Routing */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <HelpCircle size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
@@ -295,7 +295,7 @@ const NewJob = () => {
         </div>
 
         {/* Company Information */}
-        <div className="w-full rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-8 backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <Building2 size={22} className="text-violet-400" />
             <h3 className="text-xl font-semibold text-white">
