@@ -1,4 +1,5 @@
 "use client";
+import JobStatCards from '@/Components/DashboardThings/JobStatCards';
 import { authClient } from '@/lib/auth-client';
 import React from 'react';
 
@@ -20,6 +21,10 @@ const RecruiterPage = () => {
     return (
         <div>
             <h1 className="text-3xl font-bold mb-4">Welcome, {userData?.name}!</h1>
+
+            <JobStatCards></JobStatCards>
+
+
         </div>
     );
 };
