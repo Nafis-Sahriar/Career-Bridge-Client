@@ -67,10 +67,15 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Actions Section */}
-          <div className="hidden items-center gap-5 pl-10 lg:flex">
-            {user ? (
+          <div className="hidden items-center gap-5 pl-10 lg:flex min-w-[160px] justify-end">
+            {isPending ? (
+              /* Phase 1: Explicit Loading state styling while validating session */
+              <span className="text-sm font-medium text-gray-400 animate-pulse bg-white/5 border border-white/10 px-4 py-1.5 rounded-xl backdrop-blur-md">
+                Loading...
+              </span>
+            ) : user ? (
+              /* Phase 2: User is logged in successfully */
               <div className="flex items-center gap-4">
-                {/* HeroUI Avatar Component */}
                 <Avatar className="h-9 w-9 border border-white/20 bg-violet-600/20 text-white font-medium text-xs">
                   {user.imageUrl && (
                     <Avatar.Image 
@@ -89,6 +94,7 @@ const Navbar = () => {
                 </Button>
               </div>
             ) : (
+              /* Phase 3: Unauthenticated guest fallback layout view */
               <>
                 <Link
                   href="/signin"
@@ -97,13 +103,13 @@ const Navbar = () => {
                   Sign In
                 </Link>
 
-                <Button
-                  as={Link}
+                <Link
+               
                   href="/signup"
-                  className="rounded-xl bg-violet-600 px-5 font-semibold text-white shadow-lg shadow-violet-600/20 transition-all duration-300 hover:bg-violet-500 hover:shadow-violet-500/30"
+                  
                 >
-                  Get Started
-                </Button>
+                  <Button className="rounded-xl  bg-violet-600 px-5 font-semibold text-white shadow-lg shadow-violet-600/20 transition-all duration-300 hover:bg-violet-500 hover:shadow-violet-500/30">Get Started</Button>
+                </Link>
               </>
             )}
           </div>
@@ -113,6 +119,7 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex items-center rounded-xl p-1.5 text-gray-400 transition-colors hover:bg-white/5 hover:text-white lg:hidden"
             type="button"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isMenuOpen ? <Xmark width={22} height={22} /> : <Bars width={22} height={22} />}
           </button>
@@ -134,9 +141,12 @@ const Navbar = () => {
               ))}
 
               <div className="mt-2 flex flex-col gap-3 border-t border-white/10 pt-4">
-                {user ? (
+                {isPending ? (
+                  <span className="text-center text-sm font-medium text-gray-400 animate-pulse py-2">
+                    Loading...
+                  </span>
+                ) : user ? (
                   <div className="flex flex-col items-center gap-4">
-                    {/* Mobile Avatar and identity wrapper */}
                     <div className="flex items-center gap-3 w-full px-2">
                       <Avatar className="h-10 w-10 border border-white/20 bg-violet-600/20 text-white font-medium">
                         {user.imageUrl && (

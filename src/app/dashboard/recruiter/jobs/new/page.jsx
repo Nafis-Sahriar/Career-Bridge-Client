@@ -21,36 +21,34 @@ const NewJob = () => {
   const [isExternalATS, setIsExternalATS] = useState(false);
   const router = useRouter();
 
-  // to do -- User informationt hakbe, then company information ashbe.
-   const [mockCompany] = useState({
-        name: "Acme Corp ",
-        id: "company_123",
-        isApproved: true,
-    });
+  const [mockCompany] = useState({
+    name: "Acme Corp",
+    id: "company_123",
+    isApproved: true,
+  });
 
-
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const jobData = Object.fromEntries(formData.entries());
-    console.log("Job Data:", jobData);
-    // Here you would typically send jobData to your backend API
-
+    
     const payload = {
-        ...jobData,
-        companyId: mockCompany.id,
-        status: "active",
-        isPubliclyVisible: true,
+      ...jobData,
+      companyId: mockCompany.id,
+      companyName: mockCompany.name,
+      status: "active",
+      isPubliclyVisible: true,
+      isExternalATS: isExternalATS, 
     };
 
     const res = await createJob(payload);
-      if (res?.success) {
-    toast.success("Job posted successfully!");
-    e.target.reset();
-    router.push("/");
-} else {
-    toast.error("Failed to post job. Please try again.");
-}
+    if (res?.success) {
+      toast.success("Job posted successfully!");
+      e.target.reset();
+      router.push("/");
+    } else {
+      toast.error("Failed to post job. Please try again.");
+    }
   };
 
   return (
@@ -65,7 +63,7 @@ const NewJob = () => {
         </p>
       </div>
 
-      <Form className="space-y-8" onSubmit={handleSubmit} >
+      <Form className="space-y-8" onSubmit={handleSubmit}>
 
         {/* Job Information */}
         <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
@@ -89,42 +87,41 @@ const NewJob = () => {
               <FieldError />
             </TextField>
 
-            <div>
-              <Select name="jobType" placeholder="Select Job Type" className="w-full" isRequired>
-                <Label>Job Type</Label>
-                <Select.Trigger className="rounded-2xl text-white">
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="full-time">Full-time</ListBox.Item>
-                    <ListBox.Item id="part-time">Part-time</ListBox.Item>
-                    <ListBox.Item id="contract">Contract</ListBox.Item>
-                    <ListBox.Item id="internship">Internship</ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
+            {/* HeroUI v3 Select Pattern: Enforce standard triggers and proper fallback indicators */}
+            <Select name="jobType" placeholder="Select Job Type" isRequired>
+              <Label>Job Type</Label>
+              <Select.Trigger className="rounded-2xl text-white">
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  <ListBox.Item id="full-time" textValue="Full-time">Full-time</ListBox.Item>
+                  <ListBox.Item id="part-time" textValue="Part-time">Part-time</ListBox.Item>
+                  <ListBox.Item id="contract" textValue="Contract">Contract</ListBox.Item>
+                  <ListBox.Item id="internship" textValue="Internship">Internship</ListBox.Item>
+                </ListBox>
+              </Select.Popover>
+              <FieldError />
+            </Select>
 
-            <div>
-              <Select name="experienceLevel" placeholder="Select Experience Level" className="w-full" isRequired>
-                <Label>Experience Level</Label>
-                <Select.Trigger className="rounded-2xl text-white">
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="intern">Intern / Co-op</ListBox.Item>
-                    <ListBox.Item id="entry">Entry Level</ListBox.Item>
-                    <ListBox.Item id="mid">Mid-Senior Level</ListBox.Item>
-                    <ListBox.Item id="senior">Senior Level</ListBox.Item>
-                    <ListBox.Item id="lead">Lead / Manager</ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
+            <Select name="experienceLevel" placeholder="Select Experience Level" isRequired>
+              <Label>Experience Level</Label>
+              <Select.Trigger className="rounded-2xl text-white">
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  <ListBox.Item id="intern" textValue="Intern / Co-op">Intern / Co-op</ListBox.Item>
+                  <ListBox.Item id="entry" textValue="Entry Level">Entry Level</ListBox.Item>
+                  <ListBox.Item id="mid" textValue="Mid-Senior Level">Mid-Senior Level</ListBox.Item>
+                  <ListBox.Item id="senior" textValue="Senior Level">Senior Level</ListBox.Item>
+                  <ListBox.Item id="lead" textValue="Lead / Manager">Lead / Manager</ListBox.Item>
+                </ListBox>
+              </Select.Popover>
+              <FieldError />
+            </Select>
 
             <TextField name="vacancies" type="number" isRequired>
               <Label>Number of Openings</Label>
@@ -188,7 +185,7 @@ const NewJob = () => {
           </div>
         </div>
 
-        {/* Location & Workspace Layout */}
+        {/* Location details */}
         <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <MapPin size={22} className="text-violet-400" />
@@ -198,22 +195,21 @@ const NewJob = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 items-end">
-            <div>
-              <Select name="workspaceType" placeholder="Select Workplace Model" className="w-full" isRequired>
-                <Label>Workplace Model</Label>
-                <Select.Trigger className="rounded-2xl text-white">
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="on-site">On-site</ListBox.Item>
-                    <ListBox.Item id="hybrid">Hybrid</ListBox.Item>
-                    <ListBox.Item id="remote">Remote</ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
+            <Select name="workspaceType" placeholder="Select Workplace Model" isRequired>
+              <Label>Workplace Model</Label>
+              <Select.Trigger className="rounded-2xl text-white">
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  <ListBox.Item id="on-site" textValue="On-site">On-site</ListBox.Item>
+                  <ListBox.Item id="hybrid" textValue="Hybrid">Hybrid</ListBox.Item>
+                  <ListBox.Item id="remote" textValue="Remote">Remote</ListBox.Item>
+                </ListBox>
+              </Select.Popover>
+              <FieldError />
+            </Select>
 
             <TextField name="city" isRequired>
               <Label>City</Label>
@@ -268,7 +264,7 @@ const NewJob = () => {
           </div>
         </div>
 
-        {/* Application Redirection Routing */}
+        {/* Application Route */}
         <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
             <HelpCircle size={22} className="text-violet-400" />
@@ -278,12 +274,16 @@ const NewJob = () => {
           </div>
 
           <div className="space-y-6">
-            <Switch isSelected={isExternalATS} onValueChange={setIsExternalATS}>
+            <Switch 
+              isSelected={isExternalATS} 
+              onValueChange={setIsExternalATS}
+              aria-label="Toggle external application redirection link option"
+            >
               Apply via External Link/ATS
             </Switch>
 
             {isExternalATS && (
-              <div className="grid grid-cols-1 gap-6 animate-fade-in">
+              <div className="grid grid-cols-1 gap-6">
                 <TextField name="externalUrl" isRequired={isExternalATS}>
                   <Label>External Application URL</Label>
                   <Input type="url" placeholder="https://careers.company.com/jobs/apply" className="rounded-2xl text-white" />
@@ -304,21 +304,19 @@ const NewJob = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <TextField name="companyName" isRequired>
+            <TextField isReadOnly name="companyNameDisplay">
               <Label>Company</Label>
               <Input
-                value="Auto-filled Company Name"
-                readOnly
-                className="rounded-2xl text-white bg-white/5 opacity-80 cursor-not-allowed"
+                value={mockCompany.name}
+                className="rounded-2xl text-white bg-white/5 opacity-60 cursor-not-allowed"
               />
             </TextField>
 
-            <TextField name="status" isRequired>
+            <TextField isReadOnly name="companyStatusDisplay">
               <Label>Status</Label>
               <Input
-                value="Approved Company"
-                readOnly
-                className="rounded-2xl text-white bg-white/5 opacity-80 cursor-not-allowed"
+                value={mockCompany.isApproved ? "Approved Company Verified" : "Pending Approval"}
+                className="rounded-2xl text-white bg-white/5 opacity-60 cursor-not-allowed"
               />
             </TextField>
           </div>
