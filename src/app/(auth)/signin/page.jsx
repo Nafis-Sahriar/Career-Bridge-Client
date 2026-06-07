@@ -13,10 +13,16 @@ import Link from "next/link";
 import { FcGoogle } from 'react-icons/fc';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion'; // Motion components wrapper
 
 const SignInPage = () => {
+
+
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirect') || '/';
+
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +36,7 @@ const SignInPage = () => {
 
         if (data) {
             toast.success("Signed in successfully!");
-            redirect('/');
+            redirect(redirectTo);
         }
 
         if (error) {
@@ -210,7 +216,7 @@ const SignInPage = () => {
                                     <p className="mt-6 text-center text-gray-400">
                                         Do not have an account?{" "}
                                         <Link
-                                            href="/register"
+                                            href={`/signup?redirect=${redirectTo}`}
                                             className="font-medium text-violet-400 transition-colors duration-300 hover:text-violet-300"
                                         >
                                             Register

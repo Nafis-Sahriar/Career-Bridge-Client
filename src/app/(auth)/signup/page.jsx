@@ -5,11 +5,13 @@ import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion'; // Motion components wrapper
 import {Description,Radio, RadioGroup} from "@heroui/react";
 
 const SignUpPage = () => {
+
+        const redirectTo = useSearchParams().get("redirect") || "/";
 
     const [password, setPassword] = useState("");
 
@@ -276,7 +278,7 @@ const SignUpPage = () => {
                                 <p className="mt-8 text-center text-sm text-gray-400">
                                     Already have an account?{" "}
                                     <Link
-                                        href="/signin"
+                                        href={`/signin?redirect=${redirectTo}`}
                                         className="font-medium text-violet-400 transition-colors duration-300 hover:text-violet-300"
                                     >
                                         Sign In
