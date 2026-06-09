@@ -10,7 +10,9 @@ import {
   Select,
   ListBox,
   Button,
-  Switch
+  Switch,
+  Chip
+
 } from "@heroui/react";
 import { BriefcaseBusiness, Building2, MapPin, FileText, Sparkles, HelpCircle } from "lucide-react";
 import { createJob } from "@/lib/actions/jobs";
@@ -26,6 +28,8 @@ const PostJobForm = ({ company }) => {
     id: "company_123",
     isApproved: true,
   });
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,9 +66,11 @@ const PostJobForm = ({ company }) => {
         <p className="mt-2 text-gray-400">
           Publish a new job opportunity for candidates.
         </p>
+        <Chip>{company?.status}</Chip>
       </div>
-
-      <Form className="space-y-8" onSubmit={handleSubmit}>
+      {
+        company?.status === "approved" ?
+        <Form className="space-y-8" onSubmit={handleSubmit}>
 
         {/* Job Information */}
         <div className="w-full rounded-3xl border border-white/10 bg-white/2 p-6 md:p-8 backdrop-blur-xl">
@@ -330,7 +336,19 @@ const PostJobForm = ({ company }) => {
           Publish Job
         </Button>
 
-      </Form>
+      </Form>  : <div className="w-full rounded-3xl border flex items-center flex-col  border-yellow-500 bg-yellow-50 p-6 md:p-8 backdrop-blur-xl text-center">
+        
+          <HelpCircle className="text-yellow-500 mb-4" size={48} />
+          <h3 className="text-xl font-semibold text-yellow-800 mb-2">
+            Company Not Approved
+          </h3>
+          <p className="text-yellow-600">
+            Your company is not yet approved. Please contact support for assistance. You can&apos;t post jobs until your company is approved by the admin.
+          </p>
+        </div>
+      }
+
+      
     </div>
   );
 };

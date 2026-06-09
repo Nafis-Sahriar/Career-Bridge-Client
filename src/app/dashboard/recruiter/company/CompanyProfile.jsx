@@ -127,7 +127,12 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
             employeeCount: employeeCount || '1-10 employees',
             description,
             logo: logoUrl || (company ? company.logo : ''),
-            status: company ? company.status : 'Pending', // Retains status if updating profile details
+            status: company && company.status ? company.status : 'Pending', // Retains status if updating profile details
+
+            // here the && company.status? is for checking if we are in edit mode 
+            // (company exists) and if it has an existing status, 
+            // if so we keep that status, otherwise for new company creation we set it to 'Pending' by default.
+
             recruiterId: recruiter.id // Associate company with the current recruiter
         }
         setCompany(newCompanyData);
@@ -137,7 +142,13 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
         const payload = await createCompany(newCompanyData);
 
         if(payload.insertedId) {
-
+            const createdCompany = {
+                ...newCompanyData,
+                _id: payload.insertedId
+            }
+            setCompany(createdCompany);
+            // i did this to immediately reflect the newly created company 
+            // profile in the UI without waiting for a page refresh or additional fetch,
             toast.success("Company profile created successfully!");
         }
 
