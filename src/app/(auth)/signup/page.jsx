@@ -11,7 +11,7 @@ import {Description,Radio, RadioGroup} from "@heroui/react";
 
 const SignUpPage = () => {
 
-        const redirectTo = useSearchParams().get("redirect") || "/";
+    const redirectTo = useSearchParams().get("redirect") || "/";
 
     const [password, setPassword] = useState("");
 
@@ -22,16 +22,20 @@ const SignUpPage = () => {
         const formData = new FormData(e.target);
         const userData = Object.fromEntries(formData.entries());
 
+        const plan = userData.role ==='seeker'? 'seeker_free' : 'recruiter_free';
+        userData.plan = plan;
+
         const { data, error } = await authClient.signUp.email({
             email: userData.email,
             password: userData.password,
             name: userData.name,
             image: userData.imageUrl,
             role: userData.role || "seeker", // Default to "seeker" if no role is selected
+            plan: userData.plan
         });
 
         if (data) {
-            redirect('/');
+            redirect(redirectTo);
         }
         if (error) {
             toast.error("Error signing UP, something went wrong.");

@@ -28,13 +28,35 @@ const textAreaClass = "w-full bg-zinc-900/50 border border-zinc-800 text-white r
 
 export default function CompanyProfile({ recruiter, recruiterCompany }) {
     // 1. Core State
-    const [company, setCompany] = useState(recruiterCompany); // Keeps null initially to showcase empty template structure
+    const [company, setCompany] = useState(recruiterCompany); 
+    // this state is for toggling between the presentation view and the editing form view, 
+    // it does not hold the form data itself which is managed by the uncontrolled form inputs and only 
+    // committed to state on submit. This allows for a more seamless UX without constant state updates on every keystroke in the form fields.
     const [isEditing, setIsEditing] = useState(false);
+    // Validation error state object to hold any form validation errors keyed by field name, 
+    // this allows us to easily display error messages next to the relevant fields and manage form validation feedback in a structured way.
+
+
     const [errors, setErrors] = useState({});
+    // Note: The company state is initialized with the recruiterCompany prop, which means if the parent component 
+    // passes down existing company data, it will be displayed immediately.
+    //  If the recruiter does not have a company profile yet, 
+    // it will start with null and show the empty state view prompting them to create one.
     
     // Auxiliary Upload States
     const [logoUrl, setLogoUrl] = useState('');
+    // This state is specifically for managing the logo upload process. It holds the URL of the uploaded logo image.
+    // When a user selects a file to upload, the handleLogoUpload function is triggered, which uploads the image to 
+    // Imgbb and retrieves the URL.
+    // This URL is then stored in logoUrl state and used both for previewing the uploaded image in 
+    // the form and for including in the company profile data when submitting the form.
+
     const [isUploading, setIsUploading] = useState(false);
+
+    // The isUploading state is a boolean that indicates whether a file upload is currently in progress.
+    // This is useful for providing user feedback during the upload process, such as showing a loading indicator 
+    // or disabling the upload button to prevent multiple uploads at the same time.
+
 
     // 2. Client side Imgbb Upload Handler
     const handleLogoUpload = async (e) => {

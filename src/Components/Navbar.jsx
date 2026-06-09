@@ -6,13 +6,29 @@ import { Button, Avatar } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
 
-const navLinks = [
-  { label: 'Browse Jobs', href: '/jobs' },
-  { label: 'Company', href: '/companies' },
-  { label: 'Pricing', href: '/pricing' },
-];
+
+
+
 
 const Navbar = () => {
+  const navLinks = [
+  { label: 'Browse Jobs', href: '/jobs' },
+  { label: 'Company', href: '/companies' },
+  { label: 'Pricing', href: '/plan' },
+];
+
+
+
+   const dashbaordLinks ={
+    seeker: '/dashboard/seeker',
+    recruiter: '/dashboard/recruiter',
+    admin : '/dashboard/admin'
+   }
+
+
+
+
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending, refetch } = authClient.useSession();
 
@@ -20,7 +36,9 @@ const Navbar = () => {
   const user = userData ? {
     name: userData.name,
     email: userData.email,
-    imageUrl: userData.image
+    imageUrl: userData.image,
+    role : userData.role || 'seeker'
+
   } : null;
 
   // Pure JavaScript initials extractor
@@ -28,6 +46,18 @@ const Navbar = () => {
     if (!name) return "U";
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
+
+  if(user?.email)
+  {
+    navLinks.push({ label: 'Dashboard', href: dashbaordLinks[user?.role] });
+    // here I have first created an object with the dashboard links for each role and then 
+    // I am pushing the dashboard link to the navLinks array based on the user's role.
+    //  This way, the dashboard link will only be visible to logged-in users and will direct them to 
+    // the appropriate dashboard based on their role.
+  }
+
+
+
 
   const handleSignOut = async () => {
     try {
