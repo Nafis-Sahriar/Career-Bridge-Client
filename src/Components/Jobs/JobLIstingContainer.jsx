@@ -11,6 +11,14 @@ export default function JobListingContainer({ initialJobs }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isRemoteOnly, setIsRemoteOnly] = useState(false);
 
+
+
+
+
+
+
+  
+
   // Compute matched filter rows instantly
   const filteredJobs = useMemo(() => {
     return initialJobs.filter((job) => {

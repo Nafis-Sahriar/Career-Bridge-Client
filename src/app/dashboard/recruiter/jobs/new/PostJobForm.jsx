@@ -66,10 +66,23 @@ const PostJobForm = ({ company }) => {
         <p className="mt-2 text-gray-400">
           Publish a new job opportunity for candidates.
         </p>
-        <Chip>{company?.status}</Chip>
+        {
+          company?.status.toLowerCase() === "approved" ? 
+          <div>
+            <Chip className="bg-green-500 text-white">
+          {company?.status}
+        </Chip>
+          </div>
+          :
+          <div>
+            <Chip className="bg-yellow-500 text-white">
+          {company?.status || "Pending Approval"}
+        </Chip>
+          </div>
+        }
       </div>
       {
-        company?.status === "approved" ?
+        company?.status.toLowerCase() === "approved" ?
         <Form className="space-y-8" onSubmit={handleSubmit}>
 
         {/* Job Information */}
