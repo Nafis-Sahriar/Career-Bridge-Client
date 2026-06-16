@@ -19,7 +19,7 @@ export default async function Page({ searchParams }) {
 
   // console.log("Search Query:", filters);
 
-  const jobs = await getJobs();
+  const jobs = await getJobs(queryString);
 
   return (
     <div className="w-full min-h-screen bg-zinc-950 p-6 md:p-12 text-white">

@@ -8,9 +8,9 @@ export const getCompanyJobs = async(companyId, status='active') => {
     return res.json();
 }
 
-export const getJobs= async()=>{
+export const getJobs= async(queryString)=>{
 
-    return serverFetch('/api/jobs');
+    return serverFetch(`/api/jobs?${queryString}`);
 
 }
 
