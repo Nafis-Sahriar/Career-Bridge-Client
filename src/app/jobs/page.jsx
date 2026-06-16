@@ -11,6 +11,12 @@ export default async function Page({ searchParams }) {
     isRemote: filters.isRemote ==="true"? true:false,
   };
 
+
+  const querySearch = new URLSearchParams(filterObjs);
+  const queryString = querySearch.toString();
+  console.log("Search Query:", queryString);
+
+
   // console.log("Search Query:", filters);
 
   const jobs = await getJobs();
