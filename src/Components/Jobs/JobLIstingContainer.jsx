@@ -1,23 +1,56 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 import JobFilter from "./JobFilter";
 import JobCard from "./JobCard";
+import { useRouter } from "next/navigation";
 
-export default function JobListingContainer({ initialJobs }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState("all");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [isRemoteOnly, setIsRemoteOnly] = useState(false);
-
-
-
+export default function JobListingContainer({ filters, initialJobs }) {
+  const [searchQuery, setSearchQuery] = useState(filters.search || "");
+  const [selectedType, setSelectedType] = useState(filters.jobType || "all");
+  const [selectedCategory, setSelectedCategory] = useState(filters.jobCategory || "all");
+  const [isRemoteOnly, setIsRemoteOnly] = useState(filters.isRemote || false);
 
 
 
 
-  
+const router = useRouter();
+
+  useEffect(()=>{
+
+
+    const sp = new URLSearchParams();
+
+    if(searchQuery){
+      sp.set("search", searchQuery);
+    }
+
+    if(selectedType !=="all"){
+      sp.set("jobType", selectedType);
+    }
+
+    if(selectedCategory !== "all"){
+      sp.set("jobCategory", selectedCategory);
+    }
+
+    if(isRemoteOnly){
+      sp.set("isRemote", "true");
+    }
+
+    // console.log("Updating URL with filters:", sp.toString());
+
+    const path = `?${sp.toString()}`;
+    
+    router.push(path);
+
+
+
+  }, [selectedType, router, selectedCategory, isRemoteOnly, searchQuery])
+
+
+
+
 
   // Compute matched filter rows instantly
   const filteredJobs = useMemo(() => {

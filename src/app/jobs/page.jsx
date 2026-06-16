@@ -2,8 +2,17 @@
 import JobListingContainer from "@/Components/Jobs/JobLIstingContainer";
 import { getJobs } from "@/lib/api/jobs";
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
   // Fetched server-side on the initial request
+
+  const filters = await searchParams;
+
+  const filterObjs = {...filters, 
+    isRemote: filters.isRemote ==="true"? true:false,
+  };
+
+  // console.log("Search Query:", filters);
+
   const jobs = await getJobs();
 
   return (
@@ -14,7 +23,7 @@ export default async function Page() {
       </div>
 
       {/* Pass data to the Client Wrapper to handle filtering interactivity */}
-      <JobListingContainer initialJobs={jobs || []} />
+      <JobListingContainer filters ={filterObjs} initialJobs={jobs || []} />
     </div>
   );
 }
